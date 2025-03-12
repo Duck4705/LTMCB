@@ -57,4 +57,8 @@ Sau đâu là chi tiết mục đích của các nhánh:
 - Nhánh `hotfix`: Là nhánh khắc phục lỗi nhanh khi bản phát hành chính thức đang bị lỗi, sau khi khắc phục lỗi thì sẽ được merge lại vào nhánh `main`
     
 ## Nội dung đồ án
+GAME BATTLESHIP: WRECK-IT-SHIP:
+  - Thể loại: Chiến thuật, đối kháng, 2 người chơi.
+  - Nội dung: Game bắn tàu nhập vai đối kháng 1vs1 theo lượt. Trong đó sẽ có hai giai đoạn chính: setup và battle
+    - Setup: Các bạn sẽ được đặt tàu với chiều dài 1, 2, 3, 4 ô (tuỳ theo bản đồ)
 ## Tổng kết
