@@ -68,5 +68,4 @@ GAME BATTLESHIP: WRECK-IT-SHIP:
 ## Tổng kết
  - Đây là đồ án lớn của nhóm cho môn Lập trình mạng căn bản. Nhóm đã cố gắng hết sức và cố gắng hoàn thành tiến độ đồ án trong vòng 3 tháng để kịp kết thúc môn học. Nhóm gửi lời cảm ơn sâu sắc đến cô Trần Hồng Nghi đã tạo điều kiện cho nhóm được tìm hiểu và hiện thực hoá một đồ án game cá nhân. Trong quá trình xây dựng vẫn còn nhiều thiếu sót và lỗi nên rất mong cô và mọi người thông cảm bỏ qua những bug không ảnh hưởng quá mức.
 
-///////////////////
-//////////////////
+/*Cần sửa format*/
