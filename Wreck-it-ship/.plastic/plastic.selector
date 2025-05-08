@@ -1,4 +1,0 @@
-repository "Wreck-it-ship/Wreck-it-ship@18968258348057@cloud"
-  path "/"
-    br "/main"
-    co "/main"
