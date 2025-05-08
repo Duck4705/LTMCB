@@ -1,0 +1,4 @@
+repository "Wreck-it-ship2D/Wreck-it-ship2D@18968258348057@cloud"
+  path "/"
+    br "/main"
+    co "/main"
