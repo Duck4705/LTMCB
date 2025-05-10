@@ -5,6 +5,24 @@
 Assets/
 Library/
 
+# Unity project specific ignores
+Wreck-it-ship2D/Library/
+Wreck-it-ship2D/Library/PackageCache/
+Wreck-it-ship2D/Library/ArtifactDB
+**/burst-llvm-*.dll
+**/libburst-llvm-*.dylib
+**/libburst-llvm-*.so
+**/vivoxsdk*.dll
+**/libvivox*.dylib
+**/dsymutil
+
+# Additional large files to ignore
+train.csv
+DemoUnity/Library/PackageCache/
+*.dylib
+*.so
+*.dll
+
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
