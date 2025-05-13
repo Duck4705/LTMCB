@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<projectSettings>
+  <projectSetting name="com.google.external-dependency-managerAnalyticsCookie" value="63c10fb1b03045d2b6ac85fc8882848e" />
+  <projectSetting name="com.google.external-dependency-managerAnalyticsEnabled" value="True" />
+  <projectSetting name="GooglePlayServices.AutoResolverEnabled" value="False" />
+</projectSettings>
