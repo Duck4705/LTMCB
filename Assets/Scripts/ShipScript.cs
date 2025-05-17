@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class ShipScript : MonoBehaviour
 {
-    
     public float xOffset = 0;
     public float zOffset = 0;
     private float nextZRotation = 90f;
     private GameObject clickedTile;
-    int hitCount = 0;
+    private int hitCount = 0;
     public int shipSize;
 
     private Material[] allMaterials;
 
-    List<GameObject> touchTiles = new List<GameObject>();
+    public List<GameObject> touchTiles = new List<GameObject>(); // Chuyển thành public
+    public List<GameObject> hitTiles = new List<GameObject>(); // Thêm danh sách các ô đã bị bắn
+
     List<Color> allColors = new List<Color>();
 
     private void Start()
@@ -23,11 +24,16 @@ public class ShipScript : MonoBehaviour
         for (int i = 0; i < allMaterials.Length; i++)
             allColors.Add(allMaterials[i].color);
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Tile"))
         {
-            touchTiles.Add(collision.gameObject);
+            // Đảm bảo không thêm trùng tile
+            if (!touchTiles.Contains(collision.gameObject))
+            {
+                touchTiles.Add(collision.gameObject);
+            }
         }
     }
 
@@ -35,7 +41,6 @@ public class ShipScript : MonoBehaviour
     {
         touchTiles.Clear();
     }
-
 
     public Vector3 GetOffsetVec(Vector3 tilePos)
     {
@@ -70,25 +75,57 @@ public class ShipScript : MonoBehaviour
         return touchTiles.Count == shipSize;
     }
 
+    // Phương thức mới - kiểm tra xem một tile có thuộc tàu không
+    public bool ContainsTile(GameObject tile)
+    {
+        return touchTiles.Contains(tile);
+    }
+
+    // Phương thức mới - đăng ký hit cho tàu
+    public bool RegisterHit(GameObject tile)
+    {
+        // Kiểm tra tile có thuộc tàu không và chưa bị bắn trúng
+        if (ContainsTile(tile) && !hitTiles.Contains(tile))
+        {
+            hitTiles.Add(tile);
+            hitCount++;
+            return true;
+        }
+        return false;
+    }
+
     public bool HitCheckSank()
     {
         hitCount++;
         return shipSize <= hitCount;
     }
 
+    // Phương thức mới - lấy số lượng tile tàu đang đứng
+    public int GetTouchTilesCount()
+    {
+        return touchTiles.Count;
+    }
+
     public void FlashColor(Color tempColor)
     {
-        foreach(Material mat in allMaterials)
+        foreach (Material mat in allMaterials)
         {
             mat.color = tempColor;
         }
         Invoke("ResetColor", 0.5f);
     }
 
+    // Reset lại tàu khi restart game
+    public void ResetShip()
+    {
+        hitCount = 0;
+        hitTiles.Clear();
+    }
+
     private void ResetColor()
     {
-        int i = 0; 
-        foreach(Material mat in allMaterials)
+        int i = 0;
+        foreach (Material mat in allMaterials)
         {
             mat.color = allColors[i++];
         }

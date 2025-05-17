@@ -13,7 +13,6 @@ public class EnemyMissileScript : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         enemyScript = GameObject.Find("Enemy").GetComponent<EnemyScript>();
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -21,11 +20,13 @@ public class EnemyMissileScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Ship"))
         {
             if (collision.gameObject.name == "Submarine") targetTileLocation.y += 0.3f;
-            gameManager.EnemyHitPlayer(targetTileLocation, targetTile, collision.gameObject);
+            if (gameManager != null)
+                gameManager.EnemyHitPlayer(targetTileLocation, targetTile, collision.gameObject);
         }
         else
         {
-            enemyScript.PauseAndEnd(targetTile);
+            if (enemyScript != null)
+                enemyScript.PauseAndEnd(targetTile);
         }
         Destroy(gameObject);
     }

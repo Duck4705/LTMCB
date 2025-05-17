@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public Text topText;
     public Text playerShipText;
     public Text enemyShipText;
-    
+   
     [Header("Objects")]
     public GameObject missilePrefab;
     public GameObject enemyMissilePrefab;
@@ -115,10 +115,13 @@ public class GameManager : MonoBehaviour
     {
         int tileNum = Int32.Parse(Regex.Match(tile.name, @"\d+").Value);
         int hitCount = 0;
-        foreach(int[] tileNumArray in enemyShips)
+        bool hitFound = false;
+
+        foreach (int[] tileNumArray in enemyShips)
         {
             if (tileNumArray.Contains(tileNum))
             {
+                hitFound = true;
                 for (int i = 0; i < tileNumArray.Length; i++)
                 {
                     if (tileNumArray[i] == tileNum)
@@ -131,47 +134,64 @@ public class GameManager : MonoBehaviour
                         hitCount++;
                     }
                 }
+
+                TileScript tileScript = tile.GetComponent<TileScript>();
+
                 if (hitCount == tileNumArray.Length)
                 {
                     enemyShipCount--;
                     topText.text = "SUNK!!!!!!";
                     enemyFires.Add(Instantiate(firePrefab, tile.transform.position, Quaternion.identity));
-                    tile.GetComponent<TileScript>().SetTileColor(1, new Color32(68, 0, 0, 255));
-                    tile.GetComponent<TileScript>().SwitchColors(1);
+
+                    if (tileScript != null)
+                    {
+                        tileScript.SetTileColor(1, new Color32(68, 0, 0, 255));
+                        tileScript.SwitchColors(1);
+                    }
                 }
                 else
                 {
                     topText.text = "HIT!!";
-                    tile.GetComponent<TileScript>().SetTileColor(1, new Color32(255, 0, 0, 255));
-                    tile.GetComponent<TileScript>().SwitchColors(1);
+
+                    if (tileScript != null)
+                    {
+                        tileScript.SetTileColor(1, new Color32(255, 0, 0, 255));
+                        tileScript.SwitchColors(1);
+                    }
                 }
                 break;
             }
-            
         }
-        if(hitCount == 0)
+
+        if (!hitFound)
         {
-            tile.GetComponent<TileScript>().SetTileColor(1, new Color32(38, 57, 76, 255));
-            tile.GetComponent<TileScript>().SwitchColors(1);
+            TileScript tileScript = tile.GetComponent<TileScript>();
+            if (tileScript != null)
+            {
+                tileScript.SetTileColor(1, new Color32(38, 57, 76, 255));
+                tileScript.SwitchColors(1);
+            }
             topText.text = "Missed, there is no ship there.";
         }
+
         Invoke("EndPlayerTurn", 1.0f);
     }
-
     public void EnemyHitPlayer(Vector3 tile, int tileNum, GameObject hitObj)
     {
         enemyScript.MissileHit(tileNum);
         tile.y += 0.2f;
         playerFires.Add(Instantiate(firePrefab, tile, Quaternion.identity));
-        if (hitObj.GetComponent<ShipScript>().HitCheckSank())
+
+        ShipScript shipScript = hitObj.GetComponent<ShipScript>();
+        if (shipScript != null && shipScript.HitCheckSank())
         {
             playerShipCount--;
             playerShipText.text = playerShipCount.ToString();
             enemyScript.SunkPlayer();
         }
-       Invoke("EndEnemyTurn", 2.0f);
-    }
 
+        Invoke("EndEnemyTurn", 2.0f);
+    }
     private void EndPlayerTurn()
     {
         for (int i = 0; i < ships.Length; i++) ships[i].SetActive(true);
