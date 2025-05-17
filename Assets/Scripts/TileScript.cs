@@ -1,33 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TileScript : MonoBehaviour
 {
-    GameManager gameManager;
+    private GameManager gameManager;
+    private PhotonGameManager photonGameManager;
     Ray ray;
     RaycastHit hit;
 
     private bool missileHit = false;
     Color32[] hitColor = new Color32[2];
 
+    public bool isShot = false; // Đánh dấu tile đã bị bắn
+    private bool isOnlineMode = false; // Xác định đang chơi chế độ nào
+
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        // Tìm các game manager
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+        photonGameManager = GameObject.FindObjectOfType<PhotonGameManager>();
+
+        // Xác định mode
+        isOnlineMode = (photonGameManager != null);
+
         hitColor[0] = gameObject.GetComponent<MeshRenderer>().material.color;
         hitColor[1] = gameObject.GetComponent<MeshRenderer>().material.color;
     }
 
     void Update()
     {
+        // Nếu đang nhấn UI (button), không xử lý click tile
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            return;
+
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit))
         {
-            if(Input.GetMouseButtonDown(0) && hit.collider.gameObject.name == gameObject.name)
+            if (Input.GetMouseButtonDown(0) && hit.collider.gameObject == gameObject)
             {
-                if(missileHit == false)
+                // Xử lý khác nhau giữa online/offline
+                if (isOnlineMode)
                 {
-                    gameManager.TileClicked(hit.collider.gameObject);
+                    if (!isShot && photonGameManager != null) // Chế độ online: kiểm tra isShot
+                        photonGameManager.TileClicked(gameObject);
+                }
+                else
+                {
+                    if (!missileHit && gameManager != null) // Chế độ offline: dùng missileHit
+                        gameManager.TileClicked(gameObject);
                 }
             }
         }
@@ -44,7 +66,6 @@ public class TileScript : MonoBehaviour
             hitColor[0] = new Color32(38, 57, 76, 255);
             GetComponent<Renderer>().material.color = hitColor[0];
         }
-                
     }
 
     public void SetTileColor(int index, Color32 color)
@@ -55,5 +76,14 @@ public class TileScript : MonoBehaviour
     public void SwitchColors(int colorIndex)
     {
         GetComponent<Renderer>().material.color = hitColor[colorIndex];
+    }
+
+    // Phương thức reset công khai để có thể sử dụng khi restart game
+    public void ResetTile()
+    {
+        missileHit = false;
+        isShot = false;
+        hitColor[0] = GetComponent<MeshRenderer>().material.color;
+        hitColor[1] = GetComponent<MeshRenderer>().material.color;
     }
 }
