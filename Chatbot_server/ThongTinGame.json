@@ -1,0 +1,62 @@
+{
+    "gameInfo": {
+        "title": "GAME BATTLESHIP: WRECK-IT-SHIP",
+        "genre": [
+            "Chiến thuật",
+            "Đối kháng",
+            "2 người chơi"
+        ],
+        "description": "Game bắn tàu nhập vai đối kháng 1vs1 theo lượt. Trong đó sẽ có hai giai đoạn chính: setup và battle",
+        "gamePhases": {
+            "setup": {
+                "name": "Setup",
+                "description": "Các bạn sẽ được các loại đặt tàu với chiều dài 2, 3, 4, 5 ô (tuỳ theo bản đồ) trên một ma trận. Sau khi cả hai thực hiện \"giấu tàu\" xong sẽ bắt đầu giai đoạn battle",
+                "shipSizes": [2, 3, 4, 5],
+                "actions": [
+                    "Đặt tàu trên ma trận",
+                    "Giấu tàu",
+                    "Hoàn thành setup"
+                ]
+            },
+            "battle": {
+                "name": "Battle",
+                "description": "Sau khi các tàu được đặt xong, người chơi lần lượt tấn công đối thủ bằng cách chọn một ô vuông trên bảng của đối thủ để tấn công. Nếu ô vuông đó chứa một phần của một tàu, đối thủ phải thông báo rằng tàu của họ bị đánh chìm. Nếu không, đối thủ sẽ thông báo rằng tấn công đã thất bại và lượt chơi được chuyển sang người kế tiếp. Trò chơi kết thúc khi tất cả các tàu của một người chơi đều bị đánh chìm.",
+                "mechanics": {
+                    "turnBased": true,
+                    "attackSystem": "Chọn ô vuông để tấn công",
+                    "hitResult": "Tàu bị đánh chìm",
+                    "missResult": "Tấn công thất bại",
+                    "winCondition": "Tất cả tàu của đối thủ bị đánh chìm"
+                }
+            }
+        },
+        "features": [
+            "Gameplay trọn vẹn",
+            "Hệ thống đăng nhập",
+            "Hiển thị chọn nhân vật",
+            "Chơi online",
+            "Deploy lên cloud"
+        ],
+        "technologies": {
+            "mainLanguage": "C#",
+            "gameEngine": "Unity",
+            "additionalTools": "Nhiều phần mềm hỗ trợ khác",
+            "platforms": [
+                "Cloud deployment",
+                "Online multiplayer"
+            ]
+        },
+        "gameStats": {
+            "players": 2,
+            "gameType": "1vs1",
+            "playStyle": "Turn-based",
+            "difficulty": "Strategic"
+        }
+    },
+    "metadata": {
+        "version": "1.0",
+        "lastUpdated": "2025-01-03",
+        "author": "Tào Minh Đức, Mai Nguyễn Phúc Minh, Phạm Huy Hoàng",
+        "status": "Active"
+    }
+}
