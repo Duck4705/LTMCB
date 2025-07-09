@@ -68,9 +68,9 @@ def ask_battleship_bot(question):
 
 question = "Tên game của dự án này là gì?"
     
-print("🚢 === BATTLESHIP BOT === 🚢")
-print(f"🤔 Câu hỏi: {question}")
-print("🤖 BattleShip Bot đang suy nghĩ...")
+print("=== BATTLESHIP BOT === ")
+print(f"Câsu hỏi: {question}")
+print("BattleShip Bot đang suy nghĩ...")
 print("-" * 50)
 
 # Lấy câu trả lời từ bot
